@@ -2,35 +2,44 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
 	<title>Winelist</title>
-	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
+
+	<link type="text/css"rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	
 </head>
 <body>
   <div id="output" />
 </div>
+	
 	<div class="col-md-4">
-		<h1>Wines</h1>
+		<h1 th:text="#{greeting}"></h1>
+		<h1 th:inline="text">[[${#httpServletRequest.remoteUser}]]</h1>
 	</div>
-	<div class="col-md-4">
-		<h3 th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]</h3>
-	</div>
+	<span th:text="#{language.change}"></span>:
+		<select id="locales">
+			 <option value=""></option>
+		    <option value="en" th:text="#{lang.eng}"></option>
+		    <option value="de" th:text="#{lang.de}"></option>
+		</select>
 	
 	<div class="col-md-4" style="padding:20px 0">
 		<form th:action="@{/logout}" method="post">
-			<input type="submit" value="Sign Out" class="btn btn-sm btn-danger"/>
-			<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/add}" class="btn btn-sm btn-success">Add wine</a></td>	
+			<input type="submit" th:value="#{out}" class="btn btn-sm btn-danger"/>
+			<td sec:authorize="hasAuthority('ADMIN')"><a href="/add" class="btn btn-sm btn-info" th:text="#{add}">Add new wine</a> </td>
 		</form>
 	</div>
 	
     <table class="table table-striped">
     
 		<tr>
-		    <th>Name</th>
-		    <th>Origin</th>
-		    <th>Year</th>
-		    <th>Variety</th>
-		    <th>Type</th>
+		   
+		    <th th:text="#{info.name}">Name</th>
+		    <th th:text="#{info.origin}">Origin</th>
+		    <th th:text="#{info.year}">Year</th>
+		    <th th:text="#{info.variety}">Variety</th>
+		    <th th:text="#{info.type}">Type</th>
 		    <th sec:authorize="hasRole('ADMIN')"> </th>
 		</tr>  
     	<tr th:each = "wine : ${wines}">
@@ -39,10 +48,20 @@
     		<td th:text="${wine.year}"></td>
     		<td th:text="${wine.variety}"></td>
     		<td th:text="${wine.type.name}"></td>
-    		<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/delete/{id}(id=${wine.id})}" class="btn btn-danger">Delete</a></td>
-    		<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/edit/{id}(id=${wine.id})}" class="btn btn-primary">Edit</a></td>
+    		<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/delete/{id}(id=${wine.id})}" class="btn btn-sm btn-danger" th:text="#{delete}">Delete</a></td>
+    		<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/edit/{id}(id=${wine.id})}" class="btn btn-sm btn-primary" th:text="#{edit}">Edit</a></td>
     	</tr>
      </table>   
 
 </body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#locales").change(function () {
+            var selectedOption = $('#locales').val();
+            if (selectedOption != '') {
+                window.location.replace('?lang=' + selectedOption);
+            }
+        });
+    });
+</script>
 </html>

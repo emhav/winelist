@@ -1,24 +1,25 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Add new user</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<link type="text/css" rel="stylesheet" th:href="@{css/bootstrap.min.css}" />
+	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
+    	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 </head>
 <body>
-	<h1>Sign-up</h1>
+	<h3 style="padding:10px">Sign-up</h3>
      <div class="col-md-4">
-		<form th:object="${signupform}" th:action="@{/saveuser}" action="#" method="post">
-			<div>
-				<label> Username :<input type="text" th:field="*{username}" class="form-control"/></label>
+		<form th:object="${signupform}" th:action="@{/saveuser}" action="#" method="post" style="padding:10px">
+			<div><label> Username <input type="text" th:field="*{username}" class="form-control"/></label>
 				<p th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</p>	
 			</div>
 			<div>
-				<label> Password :<input type="password" th:field="*{password}" class="form-control"/></label>
+				<label> Password <input type="password" th:field="*{password}" class="form-control"/></label>
 				<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</p>	
 			</div>
 			<div>
-				<label> Re-type Password: <input type="password" th:field="*{passwordCheck}" class="form-control"/></label>
+				<label> Re-type Password<input type="password" th:field="*{passwordCheck}" class="form-control"/></label>
 				<p th:if="${#fields.hasErrors('passwordCheck')}" th:errors="*{passwordCheck}">Password Match Error</p>	
 			</div>
 			

@@ -3,19 +3,25 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
     <head>
         <title>Login</title>
+        <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
+    	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     </head>
     <body>
+    
         <div th:if="${param.error}">
             Invalid username or password.
         </div>
         <div th:if="${param.logout}">
             You have been logged out.
         </div>
-        <form th:action="@{/login}" method="post">
-            <div><label> User Name : <input type="text" name="username"/> </label></div>
-            <div><label> Password: <input type="password" name="password"/> </label></div>
-            <div><input type="submit" value="Sign In"/></div>
-        </form>
-        <a th:href="@{/signup}">Sign-up</a>
+        <form th:action="@{/login}" method="post" style="padding:10px">
+            <div><label>Username &nbsp;<input type="text" name="username" /></label></div>
+            <div><label>Password &nbsp;<input type="password" name="password"/></label></div>
+            <input type="submit" class="btn btn-success" value="Sign In"/>
+            <a th:href="@{/signup}" class="btn btn-primary">Add new user</a>
+        </form> 
+        
     </body>
+
 </html>
